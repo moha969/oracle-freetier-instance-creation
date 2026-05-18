@@ -26,6 +26,17 @@ jobs:
           oci setup repair-file-permissions --file ~/.oci/config
           oci setup repair-file-permissions --file ~/.oci/oci_api_key.pem
 
+      - name: Debug Info
+        run: |
+          echo "=== SSH Public Key ==="
+          cat ~/.oci/ssh_authorized_keys.pub
+          echo "=== Config ==="
+          cat ~/.oci/config
+          echo "=== Image ID ==="
+          echo "${{ secrets.OCI_IMAGE_ID }}"
+          echo "=== Subnet ID ==="
+          echo "${{ secrets.OCI_SUBNET_ID }}"
+
       - name: Create Instance
         run: |
           oci compute instance launch \
