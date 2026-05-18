@@ -36,4 +36,4 @@ jobs:
             --image-id "${{ secrets.OCI_IMAGE_ID }}" \
             --subnet-id "${{ secrets.OCI_SUBNET_ID }}" \
             --assign-public-ip true \
-            --ssh-authorized-keys "${{ secrets.OCI_SSH_PUBLIC_KEY }}"
+            --ssh-authorized-keys-file <(echo "${{ secrets.OCI_SSH_PUBLIC_KEY }}")
