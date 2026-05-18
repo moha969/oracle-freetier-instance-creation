@@ -20,6 +20,7 @@ jobs:
           echo "${{ secrets.OCI_PRIVATE_KEY }}" > ~/.oci/oci_api_key_pkcs8.pem
           openssl pkcs8 -topk8 -nocrypt -in ~/.oci/oci_api_key_pkcs8.pem -out ~/.oci/oci_api_key.pem 2>/dev/null || cp ~/.oci/oci_api_key_pkcs8.pem ~/.oci/oci_api_key.pem
           chmod 600 ~/.oci/oci_api_key.pem
+          echo "${{ secrets.OCI_SSH_PUBLIC_KEY }}" > ~/.oci/ssh_authorized_keys.pub
           printf "[DEFAULT]\nuser=${{ secrets.OCI_USER_OCID }}\nfingerprint=${{ secrets.OCI_FINGERPRINT }}\ntenancy=${{ secrets.OCI_TENANCY_OCID }}\nregion=${{ secrets.OCI_REGION }}\nkey_file=~/.oci/oci_api_key.pem\n" > ~/.oci/config
           chmod 600 ~/.oci/config
           oci setup repair-file-permissions --file ~/.oci/config
@@ -36,4 +37,4 @@ jobs:
             --image-id "${{ secrets.OCI_IMAGE_ID }}" \
             --subnet-id "${{ secrets.OCI_SUBNET_ID }}" \
             --assign-public-ip true \
-            --ssh-authorized-keys-file <(echo "${{ secrets.OCI_SSH_PUBLIC_KEY }}")
+            --ssh-authorized-keys-file ~/.oci/ssh_authorized_keys.pub
